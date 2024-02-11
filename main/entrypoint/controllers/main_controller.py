@@ -3,6 +3,7 @@ from dependency_injector.wiring import inject, Provide
 from main.library.di_container import Container
 from main.library.tools.core.log_tool import LogTool
 from fastapi import APIRouter, Depends
+from main.library.utils.core.settings_helper import get
 
 router = APIRouter()
 
@@ -18,7 +19,7 @@ router = APIRouter()
     },
 )
 @inject
-async def get_info(log_tool: LogTool = Depends(Provide[Container.log_tool])):
+async def get_info(logger: LogTool = Depends(Provide[Container.log_tool])):
     """
     Retorna informações básicas deste micro-serviço.
 
@@ -29,18 +30,14 @@ async def get_info(log_tool: LogTool = Depends(Provide[Container.log_tool])):
         - 500: Erro interno do servidor com a mensagem de erro.
     """
     try:
-        # Obtenha as informações básicas do micro-serviço
         name = "Meu Micro-serviço"
         version = "1.0.0"
         system = platform.system()
         machine = platform.machine()
         processor = platform.processor()
         python_version = platform.python_version()
-
-        # Utilize a instância de log_tool para logar informações úteis
-        log_tool.info("Informações sobre a API foram requisitadas e retornadas com sucesso.")
-
-        # Retorne as informações com código de sucesso 200
+        environment = get("environment")
+        logger.info("Informações sobre a API foram requisitadas e retornadas com sucesso.")
         return {
             "name": name,
             "version": version,
@@ -48,8 +45,8 @@ async def get_info(log_tool: LogTool = Depends(Provide[Container.log_tool])):
             "machine": machine,
             "processor": processor,
             "python_version": python_version,
+            "environment": environment,
         }
     except Exception as e:
-        log_tool.error(f"Erro ao obter informações sobre a API: {str(e)}")
-        # Em caso de erro inesperado, retorne código de erro 500 com a mensagem de erro
+        logger.error(f"Erro ao obter informações sobre a API: {str(e)}")
         return {"error": str(e)}, 500
