@@ -1,6 +1,12 @@
 from dependency_injector import providers, containers
-from fastapi import APIRouter
-from main.entrypoint.controllers.main_controller import router as main_controller_router
+from main.library.tools.core.log_tool import LogTool
+
 
 class Container(containers.DeclarativeContainer):
-    pass
+    """
+    Container class for dependency injection.
+
+    This class extends the `containers.DeclarativeContainer` class from the `dependency_injector` module.
+    It provides instances for each services of the system.
+    """
+    log_tool = providers.Singleton(LogTool)
