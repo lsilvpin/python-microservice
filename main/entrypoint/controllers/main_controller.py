@@ -1,8 +1,10 @@
 import platform
-from fastapi import APIRouter
+from dependency_injector.wiring import inject, Provide
+from main.library.di_container import Container
+from main.library.tools.core.log_tool import LogTool
+from fastapi import APIRouter, Depends
 
 router = APIRouter()
-
 
 @router.get(
     "/info",
@@ -15,7 +17,8 @@ router = APIRouter()
         },
     },
 )
-async def get_info():
+@inject
+async def get_info(log_tool: LogTool = Depends(Provide[Container.log_tool])):
     """
     Retorna informações básicas deste micro-serviço.
 
@@ -34,6 +37,9 @@ async def get_info():
         processor = platform.processor()
         python_version = platform.python_version()
 
+        # Utilize a instância de log_tool para logar informações úteis
+        log_tool.info("Informações sobre a API foram requisitadas e retornadas com sucesso.")
+
         # Retorne as informações com código de sucesso 200
         return {
             "name": name,
@@ -44,5 +50,6 @@ async def get_info():
             "python_version": python_version,
         }
     except Exception as e:
+        log_tool.error(f"Erro ao obter informações sobre a API: {str(e)}")
         # Em caso de erro inesperado, retorne código de erro 500 com a mensagem de erro
         return {"error": str(e)}, 500

@@ -6,16 +6,10 @@ import uvicorn
 from main.library.di_container import Container
 from main.entrypoint.controllers.main_controller import router as main_controller_router
 
-# Instanciar o container
-container = Container()
-
-# Load environment variables using custom implementation
 load_environment(get("environment"))
-
-# Create FastAPI app
+container = Container()
 app = FastAPI()
-
-# Load API routers from the container
+app.container = container
 app.include_router(main_controller_router)
 
 if __name__ == "__main__":

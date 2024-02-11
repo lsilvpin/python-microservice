@@ -37,8 +37,8 @@
 	},
 	"runArgs": [
 		"--privileged",
-		"-p",
-		"8000:8000/tcp"
+		"--network",
+		"host"
 	],
 	"mounts": [
 		// {
