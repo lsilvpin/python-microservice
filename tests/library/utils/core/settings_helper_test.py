@@ -1,6 +1,6 @@
 import sys, os, pytest
 sys.path.insert(0, os.path.abspath("."))
-from main.library.utils.settings_helper import load_environment, get
+from main.library.utils.core.settings_helper import load_environment, get
 
 def setup_function(function):
     # Create .env files for testing
