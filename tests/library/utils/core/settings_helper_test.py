@@ -19,7 +19,7 @@ def test_should_load_test1_environment_variables_from_file():
     # Test loading .env.test1.env
     load_environment('test1')
     assert get('TEST_VARIABLE') == 'test1'
-    # First variables should not be overwriten
+    # First variables should not be overwritena
     load_environment('test2')
     assert get('TEST_VARIABLE') == 'test1'
 

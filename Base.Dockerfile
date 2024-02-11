@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:3.11
 WORKDIR /app
 ADD . /app/
-EXPOSE 80
+EXPOSE 8000
 
 RUN apt upgrade -y
 RUN apt update -y
