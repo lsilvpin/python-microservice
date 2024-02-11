@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-def load_environment(env):
+def load_environment(env: str) -> None:
     """
     Load environment variables from a .env file.
     
@@ -17,7 +17,7 @@ def load_environment(env):
     # Load the .env file
     load_dotenv(dotenv_path=env_file)
 
-def get(key: str):
+def get(key: str) -> str:
     """
     Get the value of an environment variable.
     
