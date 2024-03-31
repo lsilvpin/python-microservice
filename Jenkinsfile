@@ -3,17 +3,17 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
-                bash './docker-build.sh'
+                sh './docker-build.sh'
             }
         }
         stage ('Run') {
             steps {
-                bash './docker-run.sh'
+                sh './docker-run.sh'
             }
         }
         stage ('Test') {
             steps {
-                bash './test-is-up.sh'
+                sh './test-is-up.sh'
             }
         }
     }
