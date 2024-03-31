@@ -10,7 +10,7 @@ pipeline {
             steps {
                 bash ./docker-run.sh
             }
-        }
+        },
         stage ('Test') {
             steps {
                 bash ./test-is-up.sh
