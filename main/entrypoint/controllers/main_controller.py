@@ -67,14 +67,14 @@ async def get_info(logger: LogTool = Depends(Provide[Container.log_tool])):
                 }
             }
         },
-        400: {
+        422: {
             "description": "Bad Request",
             "content": {
                 "application/json": {
                     "example": {
-                        "ErrorTag": "Bad Request",
+                        "ErrorTag": "Unprocessable Entity",
                         "ErrorMessage": "Invalid request",
-                        "ErrorCode": "400"
+                        "ErrorCode": "422"
                     }
                 }
             },
@@ -149,14 +149,14 @@ async def create_sample(
                 }
             }
         },
-        400: {
+        422: {
             "description": "Bad Request",
             "content": {
                 "application/json": {
                     "example": {
-                        "ErrorTag": "Bad Request",
+                        "ErrorTag": "Unprocessable Entity",
                         "ErrorMessage": "Invalid request",
-                        "ErrorCode": "400"
+                        "ErrorCode": "422"
                     }
                 }
             },
