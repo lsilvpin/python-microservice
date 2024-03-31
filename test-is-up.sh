@@ -8,7 +8,7 @@ echo "Checking if service is up..."
 
 limit_counter=0
 
-while [ $(curl -s -o /dev/null -w "%{http_code}" $protocol://$host_name:$port) != "200" ]; do
+while [ $(curl -s -o /dev/null -w "%{http_code}" $protocol://$host_name:$port/info) != "200" ]; do
 
     echo "Service is not up yet. Waiting for 5 seconds..."
     sleep 5
