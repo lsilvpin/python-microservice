@@ -8,7 +8,7 @@ from main.library.utils.models.validation_exception import ValidationException
 
 router = APIRouter()
 
-router.get(
+@router.get(
     "/health",
     tags=["Health"],
     responses={
@@ -20,7 +20,7 @@ router.get(
     },
 )
 @inject
-async def health(logger: LogTool = Depends(Provide[Container.log_tool])):
+async def get_health(logger: LogTool = Depends(Provide[Container.log_tool])):
     """
     Retorna o status de saúde deste micro-serviço.
     """
