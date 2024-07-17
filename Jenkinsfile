@@ -1,17 +1,24 @@
 pipeline {
-    agent any
+    agent {
+        label 'slave-archimedes-wsl'
+    }
     stages {
-        stage ('Build') {
+        stage ('Docker build') {
             steps {
                 sh 'bash ./docker-build.sh'
             }
         }
-        stage ('Run') {
+        stage ('Docker test') {
             steps {
-                sh 'bash ./docker-run.sh'
+                sh 'bash ./docker-test.sh'
             }
         }
-        stage ('Test') {
+        stage ('Docker deploy') {
+            steps {
+                sh 'bash ./docker-deploy.sh'
+            }
+        }
+        stage ('Health check') {
             steps {
                 sh 'bash ./test-is-up.sh'
             }
