@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'slave-archimedes-wsl'
+    }
     stages {
         stage ('Docker build') {
             steps {
