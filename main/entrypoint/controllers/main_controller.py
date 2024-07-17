@@ -8,6 +8,31 @@ from main.library.utils.models.validation_exception import ValidationException
 
 router = APIRouter()
 
+router.get(
+    "/health",
+    tags=["Health"],
+    responses={
+        200: {"description": "Success", "content": {"application/json": {}}},
+        500: {
+            "description": "Internal Server Error",
+            "content": {"application/json": {}},
+        },
+    },
+)
+@inject
+async def health(logger: LogTool = Depends(Provide[Container.log_tool])):
+    """
+    Retorna o status de saúde deste micro-serviço.
+    """
+    try:
+        logger.info(
+            "Status de saúde da API foi requisitado e retornado com sucesso.")
+        return {}
+    except Exception as e:
+        logger.error(f"Erro ao obter status de saúde da API: {str(e)}")
+        return {"error": str(e)}, 500
+
+
 @router.get(
     "/info",
     tags=["Information"],
@@ -38,7 +63,8 @@ async def get_info(logger: LogTool = Depends(Provide[Container.log_tool])):
         processor = platform.processor()
         python_version = platform.python_version()
         environment = get("environment")
-        logger.info("Informações sobre a API foram requisitadas e retornadas com sucesso.")
+        logger.info(
+            "Informações sobre a API foram requisitadas e retornadas com sucesso.")
         return {
             "name": name,
             "version": version,
@@ -106,7 +132,7 @@ async def create_sample(
             "ThingUpdatedAt": "2021-01-01T00:00:00",
         }
     ),
-    logger: LogTool = Depends(Provide[Container.log_tool]),    
+    logger: LogTool = Depends(Provide[Container.log_tool]),
 ):
     """
     Cria um objeto de exemplo.
@@ -129,6 +155,7 @@ async def create_sample(
             "ErrorMessage": "Internal Server Error",
             "ErrorCode": "500",
         }
+
 
 @router.get(
     "/read/{id}",
@@ -213,6 +240,7 @@ async def read_sample(
             "ErrorCode": "500",
         }
 
+
 @router.put(
     "/update/{id}",
     tags=["Sample Management"],
@@ -295,6 +323,7 @@ async def update_sample(
             "ErrorMessage": "Internal Server Error",
             "ErrorCode": "500",
         }
+
 
 @router.delete(
     "/delete/{id}",
